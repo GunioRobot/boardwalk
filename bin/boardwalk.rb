@@ -36,20 +36,20 @@ options.mongodb_password = '' if options.mongodb_password.nil?
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: boardwalk [options] [host] [port]"
   opts.separator "Default host is #{options.host}; default port is #{options.port.to_s}."
-  
+
   opts.separator ""
   opts.separator "Boardwalk specific options:"
-  
+
   opts.on("-e", "--environment ENVIRONMENT", "Environment in which Boardwalk will be run (default: #{options.environment.to_s})") do |e|
     options.environment = e.to_sym
   end
   opts.on("-s", "--server SERVER", "Desired web server software to use. (default: thin)") do |s|
     options.server = s
   end
-  
+
   opts.separator ""
   opts.separator "MongoDB specific options:"
-  
+
   opts.on("--mongodb-host HOST",
           "Host address of MongoDB. (default: localhost)") do |h|
     options.mongodb_host = h
@@ -70,15 +70,15 @@ opts = OptionParser.new do |opts|
           "Password to use when conncting to MongoDB. (nil by default)") do |p|
     options.mongodb_password = p
   end
-  
+
   opts.separator ""
   opts.separator "Common options:"
-  
+
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
     exit
   end
-  
+
   opts.on_tail("--version", "Show the current version of Boardwalk") do
     puts "Boardwalk v" + VERSION
     exit

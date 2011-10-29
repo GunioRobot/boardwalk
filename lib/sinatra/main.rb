@@ -12,7 +12,7 @@ module Sinatra
 
     # Why is this forced into all applications using Sinatra? Not cool. :(
     #   -Randall
-    
+
     # if run? && ARGV.any?
     #   require 'optparse'
     #   OptionParser.new { |op|

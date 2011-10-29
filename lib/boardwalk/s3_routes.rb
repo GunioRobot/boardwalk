@@ -64,7 +64,7 @@ delete %r{/([^\/]+)/?} do
   end
 end
 
-get %r{/([^\/]+?)/(.+)} do 
+get %r{/([^\/]+?)/(.+)} do
   # puts "\e[1;32mLine 67: get %r{/([^\/]+?)/(.+)}\e[0m"
   aws_authenticate
   bucket = @user.buckets.to_enum.find{|b| b.name == params[:captures][0]}
@@ -113,13 +113,13 @@ get %r{/([^\/]+)/?} do |e|
   end
   slot_count = Slot.all(:conditions => opts[:conditions]).size
   contents = Slot.all(opts)
-  
+
   # puts "Input info: " + @input.to_s
   # puts "Opts: " + opts.to_s
-  
+
   if @input['delimiter']
     @input['prefix'] = '' if @input['prefix'].nil?
-  
+
     # Build a hash of { :prefix => content_key }. The prefix will not include the supplied @input.prefix.
     prefixes = contents.inject({}) do |hash, c|
       prefix = get_prefix(c).to_sym
@@ -127,21 +127,21 @@ get %r{/([^\/]+)/?} do |e|
       hash[prefix] << c.file_name
       hash
     end
-  
+
     # The common prefixes are those with more than one element
     common_prefixes = prefixes.inject([]) do |array, prefix|
       array << prefix[0].to_s if prefix[1].size > 1
       array
     end
-  
+
     # The contents are everything that doesn't have a common prefix
     contents = contents.reject do |c|
       common_prefixes.include? get_prefix(c)
     end
-    
+
     # puts "\e[1;31mContents:\e[0m " + contents.inspect
   end
-  
+
   builder do |x|
       x.ListBucketResult :xmlns => "http://s3.amazonaws.com/doc/2006-03-01/" do
           x.Name bucket.name

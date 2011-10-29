@@ -53,7 +53,7 @@ get %r{/control/buckets/([^\/]+?)/(.+)} do
   bucket = current_user.buckets.to_enum.find{|b| b.name == params[:captures][0]}
   slot = bucket.slots.to_enum.find{|s| s.file_name == params[:captures][1]}
   only_can_read slot
-  
+
   since = Time.httpdate(request.env['HTTP_IF_MODIFIED_SINCE']) rescue nil
   if since && (slot.bit.upload_date) <= since
     raise NotModified
